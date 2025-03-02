@@ -35,22 +35,24 @@ def get_decks(seed: int,
     return arr
 
 
+# THIS CODE DOES WORK!!!
 def game(p1_choice: str,
          p2_choice: str,
          decks: np.ndarray
          ) -> list[list, list]:
     """
-    This function simulates the game of Penney for the inputted decks and returns the results.
+    Simulate the game of Penney and store results.
 
     Arugments:
-        p1_choice: Player 1's card selection
-        p2_choice: pPlayer 2's card selection,
-        deck: the chosen decks to simulate the game
+        p1_choice: player 1's card selection
+        p2_choice: player 2's card selection,
+        deck: chosen deck to simulate the game
+    
     """
     p1_choice, p2_choice = choices[p1_choice], choices[p2_choice]
 
     # Initialize counters
-    p1_wins_tricks, p2_wins_tricks, p1_wins_cards, p2_wins_cards = 0, 0, 0, 0
+    p2_wins_tricks, p2_wins_cards = 0, 0,
     draw_tricks, draw_cards = 0, 0
 
     # PLAY THE GAME
@@ -74,28 +76,16 @@ def game(p1_choice: str,
                 trick = np.array([])
                     
         # SCORE THE GAME BY TRICKS
-        if p1_tricks > p2_tricks:
-            p1_wins_tricks += 1
-        elif p2_tricks > p1_tricks:
+        if p2_tricks > p1_tricks:
             p2_wins_tricks += 1
-        else:
+        elif p2_tricks == p1_tricks:
             draw_tricks += 1
         
-        # SCORE THE GAME BY CARDS
-        if p1_cards > p2_cards:
-            p1_wins_cards += 1  
-        elif p2_cards > p1_cards:
+        # SCORE THE GAME BY CARDS 
+        if p2_cards > p1_cards:
             p2_wins_cards += 1
-        else:
+        elif p2_cards == p1_cards:
             draw_cards += 1
-
-    #print(f'Player 1 Wins by Tricks: {p1_wins_tricks}')
-    #print(f'Player 2 Wins by Tricks: {p2_wins_tricks}')
-    #print(f'Draws by Tricks: {draw_tricks}')
-    #print('\n')
-    #print(f'Player 1 Wins by Cards: {p1_wins_cards}')
-    #print(f'Player 2 Wins by Cards: {p2_wins_cards}')
-    #print(f'Draws by Cards: {draw_cards}')
     
     return [[p2_wins_tricks, draw_tricks], [p2_wins_cards, draw_cards]]
 
@@ -106,8 +96,7 @@ def simulate(deck: np.ndarray) -> list:
     Output: A list storing Player 1 and 2's tricks and cards.
     
     Arguments:
-        deck = Array of decks to be simulated
-        
+        deck = Array of decks to be simulated   
     """
     # Initalize external counters for the probabilities
         # annot_tricks and annot_cards hold the same probabilities but with the draw percentage in parentheses
@@ -125,16 +114,16 @@ def simulate(deck: np.ndarray) -> list:
 
             ### CALCULATE THE PROBABILITIES ###
             # Calculate the prob. of winning and of a draw based on number of TRICKS, and add to internal counters
-            prob_win_tricks = outcome[0][0]/len(deck)
+            prob_win_tricks = round((outcome[0][0]/len(deck))*100)
             prob_tricks.append(prob_win_tricks)
-            prob_draw_tricks = outcome[0][1]/len(deck)
-            prob_tricks_annot.append(str(prob_win_tricks) + '(' + str(prob_draw_tricks) + ')')
+            prob_draw_tricks = round((outcome[0][1]/len(deck))*100)
+            prob_tricks_annot.append(str(prob_win_tricks) + '%\n(' + str(prob_draw_tricks) + '%)')
             
             # Calculate the prob. of winning and of a draw based on number of CARDS, and add to internal counters
-            prob_win_cards = outcome[1][0]/len(deck)
+            prob_win_cards = round((outcome[1][0]/len(deck))*100)
             prob_cards.append(prob_win_cards)
-            prob_draw_cards = outcome[1][1]/len(deck)
-            prob_cards_annot.append(str(prob_win_cards) + '(' + str(prob_draw_cards) + ')')
+            prob_draw_cards = round((outcome[1][1]/len(deck))*100)
+            prob_cards_annot.append(str(prob_win_cards) + '%\n(' + str(prob_draw_cards) + '%)')
 
         # Add the probabilities for Player 1's choice to the external counters
         games_tricks.append(prob_tricks)
@@ -142,16 +131,18 @@ def simulate(deck: np.ndarray) -> list:
         annot_tricks.append(prob_tricks_annot)
         annot_cards.append(prob_cards_annot)
 
-    tricks_map = sns.heatmap(data=games_tricks, annot=True, cmap='Blues', xticklabels=choices.keys(), yticklabels=choices.keys())
+    tricks_map = sns.heatmap(data=games_tricks, annot=annot_tricks, fmt = '', annot_kws={"size": 8}, cmap='Blues', xticklabels=choices.keys(), yticklabels=choices.keys())
     tricks_map.set_title('Probability of Winning Based on Tricks')
     plt.xlabel("Player 2's Choice") # x-axis label with fontsize 15
     plt.ylabel("Player 1's Choice") # y-axis label with fontsize 15
+    plt.savefig('data/tricks_heatmap.png')
     plt.show()
     
-    cards_map = sns.heatmap(data=games_cards, annot=True, cmap='Blues', xticklabels=choices.keys(), yticklabels=choices.keys())
+    cards_map = sns.heatmap(data=games_cards, annot=annot_cards, fmt = '', annot_kws={"size": 8}, cmap='Blues', xticklabels=choices.keys(), yticklabels=choices.keys())
     cards_map.set_title('Probability of Winning Based on Cards')
     plt.xlabel("Player 2's Choice") # x-axis label with fontsize 15
     plt.ylabel("Player 1's Choice") # y-axis label with fontsize 15
+    plt.savefig('data/cards_heatmap.png')
     plt.show()
 
     print(annot_tricks)
