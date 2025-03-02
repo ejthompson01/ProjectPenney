@@ -29,7 +29,7 @@ simulate(decks)
 ## How to Use/Understanding the Code
 ### 1. Create decks
 
-If you wish to use the code, the first step is to create the decks of cards to use in the simulation. This is done through the **get_decks** function in the *datagen.py file*. **get_decks** takes 3 arguments, seed, num_decks, and num_cards, and creates a .npy file in the 'data' folder named *decks_*(the seed number)*.npy*. It also produces a *state.json* for the random number generator to ensure reproducibility in the same folder.
+If you wish to use the code, the first step is to create the decks of cards to use in the simulation. This is done through the **get_decks** function in the *datagen.py* file. **get_decks** takes 3 arguments, seed, num_decks, and num_cards, and creates a .npy file in the *data* folder named *decks_*(the seed number)*.npy*. It also produces a *state.json* file for the random number generator to ensure reproducibility in the same folder.
 
 - seed: This is an integer that determines the order and values of the random numbers generated to create the decks. This value is saved in the name of the .npy file.
 - num_decks: This represents the number of decks you wish to create. I recommend producing at least 1,000,000 for accurate probabilities.

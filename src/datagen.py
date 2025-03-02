@@ -145,7 +145,4 @@ def simulate(deck: np.ndarray) -> list:
     plt.savefig('data/cards_heatmap.png')
     plt.show()
 
-    print(annot_tricks)
-    print(annot_cards)
-    
     return
