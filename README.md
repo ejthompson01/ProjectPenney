@@ -26,7 +26,7 @@ To begin using the code, clone the repository and ensure that Python and the fol
 - Seaborn
 - Matplotlib.pyplot
 
-The repository is already initalized with 1 million decks, so to just see the code work, execute the following lines of code. These are also found in the *final_heatmaps.ipynb* file.
+The repository is already initalized with 1 million decks, so to just see the code work, execute the following lines of code. These are also found in the *testing.ipynb* file.
 
 ```
 from src.datagen import sample_decks

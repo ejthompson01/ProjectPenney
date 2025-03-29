@@ -1,6 +1,5 @@
 import numpy as np
 import os
-import zipfile
 import json
 
 HALF_DECK_SIZE = 26
@@ -22,7 +21,7 @@ def get_decks(n_decks: int,
         decks (np.ndarray): 2D array of shape (n_decks, num_cards), each row is a shuffled deck.
     """
     # Create a filename based on the seed
-    filename = 'data/decks_'+str(seed)+'.npy'
+    filename = f'decks_{seed}.npy'
 
     # Check if the file already exists
     if filename in os.listdir('data/'):
@@ -33,19 +32,19 @@ def get_decks(n_decks: int,
         decks = np.tile(init_deck, (n_decks, 1))
         rng = np.random.default_rng(seed)
         rng.permuted(decks, axis=1, out=decks)
-        np.save(filename, decks)
+        np.save(f'decks/{filename}', decks)
 
         # Save the deck information in a dictionry and write it to a JSON file
         deck_dict = dict(n_decks = n_decks,
                         seed = seed,
                         half_deck_size = half_deck_size,
                         decks = filename)
-        with open(f'data/{filename}_dict.json', 'w') as file:
+        with open(f'data/decks_{seed}_dict.json', 'w') as file:
             json.dump(deck_dict, file, indent=4)
         return decks
 
 def sample_decks(n_decks: int = None,
-                 filename: str = 'testing_decks.zip'
+                 filename: str = 'data/test_decks.npy'
                  )-> np.ndarray:
     """
     Takes a sample of size 'n_decks' from previously generated decks.
@@ -58,17 +57,10 @@ def sample_decks(n_decks: int = None,
     Returns:
         np.ndarray: A sample of decks.
     """
+    data = np.load(filename, allow_pickle=True)
     # Check if a n_decks value is provided
     if n_decks is None:
-        n_decks = len(np.load(filename, allow_pickle=True))
-
-    # Check if the user wants to use the testing_decks.zip file
-    if filename == 'testing_decks.zip':
-        with zipfile.ZipFile(filename, 'r') as myzip:
-            with myzip.open('testing_decks.npy') as myfile:
-                data = np.load(myfile)
-    else:
-        data = np.load(filename, allow_pickle=True)
+        n_decks = len(data)
     
-    index = np.random.choice(data.shape[0], n_decks, replace=False)  
+    index = np.random.choice(data, n_decks, replace=False)  
     return data[index]
