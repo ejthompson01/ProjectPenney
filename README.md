@@ -1,65 +1,41 @@
 # Project Penney
 ## ProjectPenney Overview
 
-The purpose of this code is to create a heatmap displaying the probability of winning based on your opponents choice in the card version of Penney's game. The intent is to create a heatmap users can reference when playing the game in real life to maximize their chances of winning. If you are new to Penney's game, please read [this Wikipedia page](https://en.wikipedia.org/wiki/Penney%27s_game) for more information.
+The purpose of this code is to create a heatmap displaying the probabilities of winning the card version of Penney's game given each player's sequence selection. The intent is to create a heatmap users can reference when playing the game in real life to maximize their chances of winning. If you are new to Penney's game, please read [this Wikipedia page](https://en.wikipedia.org/wiki/Penney%27s_game) for an introduction.
 
-There are two ways of winning Penney's game: by tricks or by cards. To win by tricks, you must have more tricks than your opponent. To win by cards, you count up the number of cards in all of your tricks then compare. The winner by cards has more cards than their opponent. It is possible for one player to win by tricks and the other to win by cards, so the code produces two heatmaps: one displaying the proabilities for winning by tricks and one by cards.
 
-**DISCLAIMER: The code is designed to only help the player who chooses their card sequence SECOND. To use the heatmap, you must choose the sequence of cards second, as the probabilities are based on the opponents selection. If you are the player who chooses their card sequence first, the heatmap will not aid in your selection. If you really want to beat your opponent, choose second and reference the heatmap!**
+### How to Play
+This version of Penny's Game is played with 2 people. Each player begins by choosing a 3 card color sequence, for example, Black Red Black or Red Red Black. Then a standard 52 card deck is well shuffled. One-by-one each card is delt while the player look for their card sequence. Deal the cards while looking for each player's sequence. When a player's sequence appears, that player wins the trick and the cards that led to it. The cards of the trick are set aside in a pile for the player who won it. Continue to deal the deck in this fashion until the cards run out with separate pile for each trick.
+
+To score by tricks, count the pile of tricks each player has. The player with more tricks wins. To score by cards, count the cards in each player's tricks. The player with more total cards win.
 
 
 ## Quick Start
 
 To begin using the code, clone the repository and ensure that Python and the following libraries are installed:
 - Numpy
-- Json
 - Seaborn
 - Matplotlib.pyplot
 
-The repository is already initalized with functional examples, so to just see the code work, execute the following lines of code. These are also found in the *final_heatmaps.ipynb* file.
+The repository is already initalized with 1 million decks, so to just see the code work, execute the following lines of code. These are also found in the *final_heatmaps.ipynb* file.
 
 ```
-from src.datagen import get_decks, game, simulate
+from src.datagen import sample_decks
+from src.processing import simulate
+from src.visualize import visualize
 import numpy as np
-decks = np.load('data/decks_1.npy')
-simulate(decks)
+
+decks = sample_decks('data/decks_test.npy', 100000)
+vizualize(simulate(decks))
 ```
 
 
 ## How to Use/Understanding the Code
-### 1. Create decks
+### 1. Create or augment decks
 
-If you wish to use the code, the first step is to create the decks of cards to use in the simulation. This is done through the **get_decks** function in the *datagen.py* file. **get_decks** takes 3 arguments, seed, num_decks, and num_cards, and creates a .npy file in the *data* folder named *decks_*(the seed number)*.npy*. It also produces a *state.json* file for the random number generator to ensure reproducibility in the same folder.
-
-- seed: This is an integer that determines the order and values of the random numbers generated to create the decks. This value is saved in the name of the .npy file.
-- num_decks: This represents the number of decks you wish to create. I recommend producing at least 1,000,000 for accurate probabilities.
-- num_cards: This is the number of cards you wish to have in each deck. The default is 52.
+If you wish to use the code, the first step is to create the decks of cards to use in the simulation. There are 2 ways to go about this: create new decks or select a sample from stored decks. If you would like to create new decks use the `get_decks` function. Then call `sample_decks` to access the decks. Information about the created decks are stored in a dictionary in a corresponding .npy file. Both the deck and dictionary files end in the seed used to create the decks and are saved in the *data* folder. If you don't wish to make new decks, there are 1 million already stored in *decks_test.npy* in the *data* folder. Pass this file and the desired number of decks into `sample_decks` to acces the decks.
 
 
-### 2. Simulate the games
+### 2. Simulate the games and create the heatmaps
 
-Once you have created the decks with your specifications, the next step is to simulate the games and produce the heatmaps. This is done through the **simulate** function in the *datagen.py* file. The **simulate** function takes one argument, deck, which are the decks created in step one. To properly use the **simulate** function you must load the .npy file into a variable with the np.load() function. An example of how to do this is below:
-```
-import numpy as np
-decks = np.load('data/decks_1.npy')
-```
-From there you pass the variable containing the loaded decks into **simulate** which produces the heatmaps. The heatmaps are saved in a folder called *heatmaps*.
-
-
-Here is an example of how you can use the code. Fill in the arguments left blank.
-
-
-```
-from src.datagen import get_decks, game, simulate
-
-seed = 
-num_decks = 
-num_cards = 
-
-get_decks(seed, num_decks, num_cards)
-decks = np.load(f'data/decks_{seed}.npy')
-simulate(decks)
-```
-
-
-
+Once you have created the decks with your specifications, the next step is to simulate the games and produce the heatmaps. Create a variable by calling the `simulate` function in the *processing.py* file in the *src* folder. Pass this variable into the `visualize` function from the *visualize.py* file in the same folder to create the heatmaps.
