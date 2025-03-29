@@ -3,11 +3,20 @@
 
 The purpose of this code is to create a heatmap displaying the probabilities of winning the card version of Penney's game given each player's sequence selection. The intent is to create a heatmap users can reference when playing the game in real life to maximize their chances of winning. If you are new to Penney's game, please read [this Wikipedia page](https://en.wikipedia.org/wiki/Penney%27s_game) for an introduction.
 
-
 ### How to Play
-This version of Penny's Game is played with 2 people. Each player begins by choosing a 3 card color sequence, for example, Black Red Black or Red Red Black. Then a standard 52 card deck is well shuffled. One-by-one each card is delt while the player look for their card sequence. Deal the cards while looking for each player's sequence. When a player's sequence appears, that player wins the trick and the cards that led to it. The cards of the trick are set aside in a pile for the player who won it. Continue to deal the deck in this fashion until the cards run out with separate pile for each trick.
+This version of Penny's Game is played with 2 people. Each player begins by choosing a 3 card color sequence, for example, Black Red Black or Red Red Black. One player is deemed the Dealer who then thoughroughly shuffles a standard 52 card deck. The Dealer deals each card one-by-one and side-by-side while both players watch for their card sequence to appear. When a player's sequence appears, the cards are compiled into a pile and set aside near that player. One of these piles is called a trick. The Dealer continues to deal the deck beginning a new trick. Players continue to look for their sequence and create new piles for each trick until the deck runs out. If neither player wins the final trick after dealing all the cards, the remaining cards are set aside and not counted in scoring. To score by tricks, count the piles of tricks each player has. The player with more tricks wins. To score by cards, count the total number of cards in each player's trick piles. The player with more total cards wins.
 
-To score by tricks, count the pile of tricks each player has. The player with more tricks wins. To score by cards, count the cards in each player's tricks. The player with more total cards win.
+
+### Tabel of Contents
+**data** folder
+- Purpose: This folder holds all data for the project. Any new data created by users will get stored here.
+- Contains: *testing_decks.zip* (a zip file containing 1 million previously generated decks) and *testing_deck_dict.npy* (a npy file containing the metadata for testing_decks.zip)
+**heatmaps** folder
+- Purpose: This folder holds all heatmap .png's for the project. Any new heatmaps created by the user will get stored here.
+- Contains: *heatmaps.png* (a png file containing the heatmaps for the 1 million decks)
+**src** folder
+- Purpose: This folder holds the modules used for creating this project.
+- Contains: *datagen.py* (a python file that contains functions for data generation and access), *processing.py* (a python file that contains functions for simulating the game), and *visualize.py* (a python file that contains functions for producing heatmaps)
 
 
 ## Quick Start
@@ -32,8 +41,7 @@ vizualize(simulate(decks))
 
 ## How to Use/Understanding the Code
 ### 1. Create or augment decks
-
-If you wish to use the code, the first step is to create the decks of cards to use in the simulation. There are 2 ways to go about this: create new decks or select a sample from stored decks. If you would like to create new decks use the `get_decks` function. Then call `sample_decks` to access the decks. Information about the created decks are stored in a dictionary in a corresponding .npy file. Both the deck and dictionary files end in the seed used to create the decks and are saved in the *data* folder. If you don't wish to make new decks, there are 1 million already stored in *decks_test.npy* in the *data* folder. Pass this file and the desired number of decks into `sample_decks` to acces the decks.
+The first step to using the code is accessing decks to use when simulating the Penney's Game. Users can either create a new set of decks or use the previously created decks stored in the data folder. To create new decks, call the `get_decks` function. Information about the created decks are stored in a dictionary in a corresponding .npy file. Both the deck and dictionary files end in the seed used to create the decks and are saved in the *data* folder. To use the loaded decks, call the `sample_decks` function and pass in 'testing_decks.zip' and the number of desired decks. The `sample_decks` function can also be used to access decks after users create them.
 
 
 ### 2. Simulate the games and create the heatmaps

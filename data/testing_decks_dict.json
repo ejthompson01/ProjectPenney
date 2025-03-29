@@ -1,0 +1,6 @@
+{
+    "n_decks": 1000000,
+    "seed": 440,
+    "half_deck_size": 26,
+    "decks": "testing_decks.zip"
+}

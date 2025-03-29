@@ -1,6 +1,8 @@
 import numpy as np
 import os
 import zipfile
+import json
+
 HALF_DECK_SIZE = 26
 
 
@@ -19,7 +21,10 @@ def get_decks(n_decks: int,
     Returns:
         decks (np.ndarray): 2D array of shape (n_decks, num_cards), each row is a shuffled deck.
     """
+    # Create a filename based on the seed
     filename = 'data/decks_'+str(seed)+'.npy'
+
+    # Check if the file already exists
     if filename in os.listdir('data/'):
         print(f"A file with seed {seed} already exists. Choose another seed.")
         return
@@ -29,13 +34,15 @@ def get_decks(n_decks: int,
         rng = np.random.default_rng(seed)
         rng.permuted(decks, axis=1, out=decks)
         np.save(filename, decks)
+
+        # Save the deck information in a dictionry and write it to a JSON file
         deck_dict = dict(n_decks = n_decks,
                         seed = seed,
                         half_deck_size = half_deck_size,
-                        decks = decks)
-        np.save('data/deck_dict_'+str(seed)+'.npy', decks)
+                        decks = filename)
+        with open(f'data/{filename}_dict.json', 'w') as file:
+            json.dump(deck_dict, file, indent=4)
         return decks
-
 
 def sample_decks(n_decks: int = None,
                  filename: str = 'testing_decks.zip'
