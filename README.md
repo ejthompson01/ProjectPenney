@@ -1,5 +1,5 @@
 # Project Penney
-## ProjectPenney Overview
+## Project Penney Overview
 
 The purpose of this code is to create a heatmap displaying the probabilities of winning the card version of Penney's game given each player's sequence selection. The intent is to create a heatmap users can reference when playing the game in real life to maximize their chances of winning. If you are new to Penney's game, please read [this Wikipedia page](https://en.wikipedia.org/wiki/Penney%27s_game) for an introduction.
 
