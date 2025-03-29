@@ -10,17 +10,16 @@ This version of Penny's Game is played with 2 people. Each player begins by choo
 ### Tabel of Contents
 **data** folder
 - Purpose: This folder holds all data for the project. Any new data created by users will get stored here.
-- Contains: *testing_decks.zip* (a zip file containing 1 million previously generated decks) and *testing_deck_dict.npy* (a npy file containing the metadata for testing_decks.zip)
+- Contains: *test_decks.npy* (a zip file containing 1 million previously generated decks) and *test_deck_dict.json* (a npy file containing the metadata for testing_decks.zip)
 **heatmaps** folder
 - Purpose: This folder holds all heatmap .png's for the project. Any new heatmaps created by the user will get stored here.
-- Contains: *heatmaps.png* (a png file containing the heatmaps for the 1 million decks)
+- Contains: *test_heatmaps.png* (a png file containing the heatmaps using the decks in test_decks.npy)
 **src** folder
 - Purpose: This folder holds the modules used for creating this project.
 - Contains: *datagen.py* (a python file that contains functions for data generation and access), *processing.py* (a python file that contains functions for simulating the game), and *visualize.py* (a python file that contains functions for producing heatmaps)
 
 
 ## Quick Start
-
 To begin using the code, clone the repository and ensure that Python and the following libraries are installed:
 - Numpy
 - Seaborn
