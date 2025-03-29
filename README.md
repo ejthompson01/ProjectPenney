@@ -31,10 +31,9 @@ The repository is already initalized with 1 million decks, so to just see the co
 from src.datagen import sample_decks
 from src.processing import simulate
 from src.visualize import visualize
-import numpy as np
 
-decks = sample_decks('data/decks_test.npy', 100000)
-vizualize(simulate(decks))
+decks = sample_decks(1000000, 'data/test_decks.npy')
+visualize(simulate(decks), 'heatmaps')
 ```
 
 
