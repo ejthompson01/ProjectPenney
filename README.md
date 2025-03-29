@@ -11,9 +11,11 @@ This version of Penny's Game is played with 2 people. Each player begins by choo
 **data** folder
 - Purpose: This folder holds all data for the project. Any new data created by users will get stored here.
 - Contains: *test_decks.npy* (a zip file containing 1 million previously generated decks) and *test_deck_dict.json* (a npy file containing the metadata for testing_decks.zip)
+
 **heatmaps** folder
 - Purpose: This folder holds all heatmap .png's for the project. Any new heatmaps created by the user will get stored here.
 - Contains: *test_heatmaps.png* (a png file containing the heatmaps using the decks in test_decks.npy)
+
 **src** folder
 - Purpose: This folder holds the modules used for creating this project.
 - Contains: *datagen.py* (a python file that contains functions for data generation and access), *processing.py* (a python file that contains functions for simulating the game), and *visualize.py* (a python file that contains functions for producing heatmaps)
